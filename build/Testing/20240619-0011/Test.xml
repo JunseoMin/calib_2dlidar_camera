@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="(empty)"
+	BuildStamp="20240619-0011-Experimental"
+	Name="junseo-17ZD90N-VX70K"
+	Generator="ctest-3.16.3"
+	CompilerName="/usr/bin/c++"
+	CompilerVersion="9.4.0"
+	OSName="Linux"
+	Hostname="junseo-17ZD90N-VX70K"
+	OSRelease="5.4.0-186-generic"
+	OSVersion="#206-Ubuntu SMP Fri Apr 26 12:31:10 UTC 2024"
+	OSPlatform="x86_64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="126"
+	ProcessorCacheSize="8192"
+	NumberOfLogicalCPU="8"
+	NumberOfPhysicalCPU="4"
+	TotalVirtualMemory="2047"
+	TotalPhysicalMemory="15640"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="2572.4"
+	>
+	<Testing>
+		<StartDateTime>Jun 19 09:11 KST</StartDateTime>
+		<StartTestTime>1718755897</StartTestTime>
+		<TestList/>
+		<EndDateTime>Jun 19 09:11 KST</EndDateTime>
+		<EndTestTime>1718755897</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>

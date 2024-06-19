@@ -1,0 +1,8 @@
+prefix=/home/junseo/smartfarm/stuffs/caki/build/devel
+
+Name: caki
+Description: Description of caki
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
