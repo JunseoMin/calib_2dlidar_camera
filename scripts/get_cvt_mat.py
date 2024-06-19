@@ -55,28 +55,40 @@ def project_lidar_to_image(scan, image):
 
     # Convert LaserScan to 2D points in LiDAR frame
     angles = np.linspace(scan.angle_min, scan.angle_max, len(scan.ranges))
-    points_lidar = np.array([(r * np.cos(a), r * np.sin(a), 0) for r, a in zip(scan.ranges, angles) if r < scan.range_max and r > scan.range_min])
+    
+    # Calculate FOV limits in radians from degrees
+    fov_deg = 65.0
+    fov_rad = np.radians(fov_deg)
+    fov_min = -fov_rad / 2.0
+    fov_max = fov_rad / 2.0
 
-    rospy.logwarn("angles, points set")
+    points_lidar = []
+    for r, a in zip(scan.ranges, angles):
+        if r < scan.range_max and r > scan.range_min:
+            if a >= fov_min and a <= fov_max:
+                points_lidar.append((r * np.cos(a), r * np.sin(a), 0))
+
+    points_lidar = np.array(points_lidar)
+
+    rospy.logwarn("LiDAR points within FOV calculated")
 
     # Project LiDAR points onto the image
-    points_img, _ = cv2.projectPoints(points_lidar, rvec, tvec, cammat, dist_coeffs)
-    points_img = points_img.reshape(-1, 2)
+    if len(points_lidar) > 0:
+        points_img, _ = cv2.projectPoints(points_lidar, rvec, tvec, cammat, dist_coeffs)
+        points_img = points_img.reshape(-1, 2)
 
-    # Create a copy of the image to make it writable
-    writable_image = image.copy()
-    rospy.logwarn("img copied")
+        # Create a copy of the image to make it writable
+        writable_image = image.copy()
 
+        for point in points_img:
+            x, y = int(point[0]), int(point[1])
+            cv2.circle(writable_image, (x, y), 3, (0, 0, 255), -1)
 
-    for point in points_img:
-        # rospy.logwarn("points set writed {},{}".format(point[0],point[1]))
-        
-        x, y = int(point[0]), int(point[1])
-        cv2.circle(writable_image, (x, y), 3, (0, 0, 255), -1)
-    rospy.logwarn("setted")
+        cv2.imshow("Image with LiDAR", writable_image)
+        cv2.waitKey(1)
 
-    cv2.imshow("Image with LiDAR", writable_image)
-    cv2.waitKey(1)
+    else:
+        rospy.logwarn("No LiDAR points within FOV")
 
 def camera_cb(msg):
     try:
